@@ -4,6 +4,10 @@ name: CoCursor Windows x64
 
 on:
   workflow_dispatch:
+  # workflow_dispatch only shows up for workflows on the default branch, so also build on push.
+  push:
+    branches:
+      - "cocursor/**"
 
 env:
   SCITER_RUST_VERSION: "1.75"

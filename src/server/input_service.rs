@@ -375,7 +375,12 @@ fn run_pos(sp: EmptyExtraFieldService, state: &mut StatePos) -> ResultType<()> {
                 0
             }
         };
-        sp.send_without(msg_out, exclude);
+        // CoCursor: skip local-user movement. The Flutter client drops a peer's mouse input
+        // for 1s after each position it receives (`_checkPeerControlProtected`), which makes
+        // simultaneous local + remote mouse use impossible.
+        if exclude != 0 {
+            sp.send_without(msg_out, exclude);
+        }
     }
     state.cursor_pos = (x, y);
 
